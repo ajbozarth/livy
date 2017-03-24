@@ -38,6 +38,7 @@ import com.cloudera.livy.server.interactive.InteractiveSessionServlet
 import com.cloudera.livy.server.recovery.{SessionStore, StateStore}
 import com.cloudera.livy.sessions.{BatchSessionManager, InteractiveSessionManager}
 import com.cloudera.livy.sessions.SessionManager.SESSION_RECOVERY_MODE_OFF
+import com.cloudera.livy.ui._
 import com.cloudera.livy.utils.LivySparkUtils._
 import com.cloudera.livy.utils.SparkYarnApp
 
@@ -166,6 +167,11 @@ class LivyServer extends Logging {
 
             val batchServlet = new BatchSessionServlet(batchSessionManager, sessionStore, livyConf)
             mount(context, batchServlet, "/batches/*")
+
+            if (livyConf.getBoolean(UI_ENABLED)) {
+              val uiServlet = new UIServlet(livyConf)
+              mount(context, uiServlet, "/ui/*")
+            }
 
             context.mountMetricsAdminServlet("/")
 
