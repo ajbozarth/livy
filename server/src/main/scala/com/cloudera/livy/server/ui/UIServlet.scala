@@ -18,19 +18,18 @@
 
 package com.cloudera.livy.server.ui
 
-import java.io.File
+import org.scalatra.ScalatraServlet
 
-import org.scalatra._
-import com.cloudera.livy.Logging
 import com.cloudera.livy.LivyConf
-import org.eclipse.jetty.util.resource.Resource
+import com.cloudera.livy.Logging
 
 class UIServlet(livyConf: LivyConf) extends ScalatraServlet with Logging {
   before() { contentType = "text/html" }
 
   get("/") {
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> ++
-    <script src="/static/sessions.js"></script> ++
-    <div id="sessions"></div>
+    <link rel="stylesheet" href="/static/sessions.css" type="text/css"/> ++
+      <script src="/static/jquery-3.2.1.min.js"></script> ++
+      <script src="/static/sessions.js"></script> ++
+      <div id="sessions"></div>
   }
 }
